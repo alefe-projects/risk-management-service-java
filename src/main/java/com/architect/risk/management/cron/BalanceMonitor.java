@@ -42,7 +42,7 @@ public class BalanceMonitor {
     public void monitorBalance() {
         List<UserConfiguration> configs = userConfigurationService.getAllConfigurations();
 
-        configs.forEach(config -> {
+        configs.parallelStream().forEach(config -> {
             AccountSummaryDTO accountSummary = balanceMonitorService.getAccountSummaryByAccountId(config.clientId());
             processDailyLoss(accountSummary, config);
             processMaxLoss(accountSummary, config);
